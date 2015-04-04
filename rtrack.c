@@ -66,9 +66,6 @@ visitor(CXCursor cursor, CXCursor parent, CXClientData data)
 		printf("%s\n", filename);
 	}
 
-	/*
-	 * XXX: check parent whith scopes' parent
-	 */
 	if (scope_unscoped(this, parent)) {
 		printf("=> scope has unscoped\n");
 		scope_unregister(this, parent);
