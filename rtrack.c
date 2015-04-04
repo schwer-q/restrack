@@ -51,6 +51,7 @@ rtrack_analyse(rtrack_t *this)
 	printf("analyzing %s...\n", this->filename);
 	cursor = clang_getTranslationUnitCursor(this->tu);
 	clang_visitChildren(cursor, visitor, (CXClientData)this);
+	scope_unregister(this, cursor);
 }
 
 static enum CXChildVisitResult
