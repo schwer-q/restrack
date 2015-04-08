@@ -39,8 +39,8 @@ struct rtrack {
 	CXIndex			index;
 	CXTranslationUnit	tu;
 
-	int		scopelvl;
-	scope_t		*scopes;
+	int		scopelvl; /* current scope level */
+	scope_t		*scopes;  /* scope hold in this tu */
 };
 
 struct scope {
