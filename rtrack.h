@@ -31,6 +31,8 @@
 #include <clang-c/Index.h>
 
 typedef struct rtrack rtrack_t;
+
+typedef struct ressource ressource_t;
 typedef struct scope scope_t;
 typedef struct variable variable_t;
 
@@ -41,6 +43,11 @@ struct rtrack {
 
 	int		scopelvl; /* current scope level */
 	scope_t		*scopes;  /* scope hold in this tu */
+};
+
+struct ressource {
+	CXCursor	assign;	/* cursor that assigned the ressource */
+	CXCursor	release; /* cursor that released the ressource */
 };
 
 struct scope {
@@ -59,9 +66,7 @@ struct variable {
 	CXCursor	cursor;	/* cursor reference */
 	CXType		type;	/* type information */
 
-	int		ressource; /* is allocated? */
-	CXCursor	resass_curs; /* cursor that assigned the ressource */
-	CXCursor	resrel_curs; /* cursor that released the ressource */
+	ressource_t	*ressource; /* XXX: drop the _ when the 3 vars go away */
 
 	variable_t	*prev;
 	variable_t	*next;
