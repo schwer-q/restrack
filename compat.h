@@ -8,6 +8,8 @@
 #ifndef __COMPAT_H
 #define __COMPAT_H
 
+#include <sys/types.h>
+
 #if !defined(HAVE_GETPROGNAME)
 const char	*getprogname(void);
 #endif	/* HAVE_GETPROGNAME */

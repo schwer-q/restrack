@@ -22,6 +22,8 @@ __FBSDID("$FreeBSD: stable/9/lib/libc/string/strlcpy.c 189133 2009-02-28 05:15:0
 #include <sys/types.h>
 #include <string.h>
 
+#if !defined(HAVE_STRLCPY)
+
 /*
  * Copy src to string dst of size siz.  At most siz-1 characters
  * will be copied.  Always NUL terminates (unless siz == 0).
@@ -52,3 +54,5 @@ strlcpy(char * __restrict dst, const char * __restrict src, size_t siz)
 
 	return(s - src - 1);	/* count does not include NUL */
 }
+
+#endif	/* HAVE_STRLCPY */

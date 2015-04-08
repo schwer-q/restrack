@@ -12,6 +12,7 @@
 #include <clang-c/Index.h>
 #include <clang-c/CXString.h>
 
+#include "compat.h"
 #include "rtrack.h"
 #include "xalloc.h"
 

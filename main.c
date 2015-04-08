@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "compat.h"
 #include "rtrack.h"
 
 static void	usage(void);
