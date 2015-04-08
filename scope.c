@@ -36,7 +36,7 @@
 void
 scope_register(rtrack_t *rtrack, CXCursor parent)
 {
-	scope_t *head, *scope;
+	scope_t *scope, *tmp;
 
 	scope = xcalloc(1, sizeof(scope_t));
 	scope->parent = parent;
@@ -46,11 +46,11 @@ scope_register(rtrack_t *rtrack, CXCursor parent)
 	        rtrack->scopes = scope;
 	}
 	else {
-		head = rtrack->scopes;
-		while (head->next)
-			head = head->next;
-		scope->level = head->level + 1;
-		head->next = scope;
+		for (tmp = rtrack->scopes; tmp->next; /* void */)
+			tmp = tmp->next;
+		scope->level = tmp->level + 1;
+	        tmp->next = scope;
+		scope->prev = tmp;
 	}
 	rtrack->scopelvl = scope->level;
 }
@@ -58,7 +58,7 @@ scope_register(rtrack_t *rtrack, CXCursor parent)
 void
 scope_unregister(rtrack_t *rtrack, CXCursor parent)
 {
-	scope_t *scope, *prev = NULL;
+	scope_t *scope;
 
 	for (scope = rtrack->scopes; scope; /* void */) {
 		if (clang_equalCursors(parent, scope->parent)) {
@@ -66,11 +66,13 @@ scope_unregister(rtrack_t *rtrack, CXCursor parent)
 				scope_unregister(rtrack, scope->next->parent);
 
 			rtrack->scopelvl = scope->level - 1;
-			free(scope);
-			if (!prev)
+			variable_unregister(rtrack, scope,
+					    scope->variables->cursor);
+			if (!scope->prev)
 				rtrack->scopes = NULL;
 			else
-				prev->next = NULL;
+				scope->prev->next = NULL;
+			free(scope);
 
 			printf("=> scope has changed: "
 			       "destroyed scope \033[01;31m#%d\033[00m\n",
@@ -78,7 +80,6 @@ scope_unregister(rtrack_t *rtrack, CXCursor parent)
 
 			return;
 		}
-		prev = scope;
 		scope = scope->next;
 	}
 }

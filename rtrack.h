@@ -48,6 +48,7 @@ struct scope {
 	CXCursor	parent;
 	variable_t	*variables;
 
+	scope_t		*prev;
 	scope_t		*next;
 };
 
@@ -70,5 +71,8 @@ void		rtrack_free(rtrack_t *rtrack);
 void	scope_register(rtrack_t *rtrack, CXCursor parent);
 void	scope_unregister(rtrack_t *rtrack, CXCursor parent);
 int	scope_unscoped(rtrack_t *rtrack, CXCursor parent);
+
+void	variable_register(rtrack_t *rtrack, CXCursor cursor);
+void	variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor);
 
 #endif	/* __RTRACK_H */

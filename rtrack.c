@@ -122,6 +122,7 @@ visitor(CXCursor cursor, CXCursor parent, CXClientData data)
 		       clang_getCString(name), clang_getCString(typename));
 		clang_disposeString(name);
 		clang_disposeString(typename);
+		variable_register(this, cursor);
 		break;
 	}
 

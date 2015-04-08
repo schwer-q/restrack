@@ -25,6 +25,9 @@
  *
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #include <clang-c/Index.h>
 #include <clang-c/CXString.h>
 
@@ -65,22 +68,29 @@ variable_register(rtrack_t *rtrack, CXCursor cursor)
 
 
 void
-variable_unregister(rtrack_t *rtrack, CXCursor cursor)
+variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor)
 {
-	scope_t *scope;
 	variable_t *var;
 
-	for (scope = rtrack->scopes; scope->next; /* void */)
-		scope = scope->next;
+	for (var = scope->variables; var; /* void */) {
+		if (clang_equalCursors(var->cursor, cursor)) {
+			if (var->next)
+				variable_unregister(rtrack, scope,
+						    var->next->cursor);
 
-	for (var = scope->variables;
-	     clang_equalCursors(var->cursor, cursor); /* void */)
+			printf("=> desrtroyed variable \033[01;36m%s\033[00m\n",
+			       var->name);
+
+			if (!var->prev)
+				scope->variables = NULL;
+			else
+				var->prev->next = NULL;
+
+			free(var->name);
+			free(var->typename);
+			free(var);
+
+		}
 		var = var->next;
-	if (var->next)
-		variable_unregister(rtrack, var->next->cursor);
-
-	free(var->name);
-	free(var->typename);
-	var->prev->next = NULL;
-	free(var);
+	}
 }
