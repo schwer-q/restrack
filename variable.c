@@ -59,6 +59,7 @@ variable_register(rtrack_t *rtrack, CXCursor cursor)
 		for (tmp = scope->variables; tmp->next; /* void */)
 			tmp = tmp->next;
 		tmp->next = var;
+		var->prev = tmp;
 	}
 }
 
@@ -78,4 +79,8 @@ variable_unregister(rtrack_t *rtrack, CXCursor cursor)
 	if (var->next)
 		variable_unregister(rtrack, var->next->cursor);
 
+	free(var->name);
+	free(var->typename);
+	var->prev->next = NULL;
+	free(var);
 }
