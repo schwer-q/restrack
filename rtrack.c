@@ -122,6 +122,7 @@ visitor(CXCursor cursor, CXCursor parent, CXClientData data)
 
         printf("=> found call declaration: \033[01;36m%s\033[00m \033[32m'%s'\033[00m\n",
                clang_getCString(name), clang_getCString(typename));
+        variable_register(this, cursor);
         clang_disposeString(name);
         clang_disposeString(typename);
         break;
