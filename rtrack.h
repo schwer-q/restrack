@@ -53,11 +53,15 @@ struct scope {
 };
 
 struct variable {
-	char		*name;
-	char		*typename;
+	char		*name;	/* variable name */
+	char		*typename; /* type name */
 
-	CXCursor	cursor;
-	CXType		type;
+	CXCursor	cursor;	/* cursor reference */
+	CXType		type;	/* type information */
+
+	int		ressource; /* is allocated? */
+	CXCursor	resass_curs; /* cursor that assigned the ressource */
+	CXCursor	resrel_curs; /* cursor that released the ressource */
 
 	variable_t	*prev;
 	variable_t	*next;
