@@ -66,8 +66,9 @@ scope_unregister(rtrack_t *rtrack, CXCursor parent)
 				scope_unregister(rtrack, scope->next->parent);
 
 			rtrack->scopelvl = scope->level - 1;
-			variable_unregister(rtrack, scope,
-					    scope->variables->cursor);
+			if (scope->variables)
+				variable_unregister(rtrack, scope,
+						    scope->variables->cursor);
 			if (!scope->prev)
 				rtrack->scopes = NULL;
 			else
