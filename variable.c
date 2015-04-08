@@ -43,8 +43,11 @@ variable_register(rtrack_t *rtrack, CXCursor cursor)
 	variable_t *var, *tmp;
 
 	var = xcalloc(1, sizeof(variable_t));
-	name = clang_getCursorSpelling(cursor);
+
+	var->cursor = cursor;
 	var->type = clang_getCursorType(cursor);
+
+	name = clang_getCursorSpelling(cursor);
 	typename = clang_getTypeSpelling(var->type);
 
 	var->name = xstrdup(clang_getCString(name));

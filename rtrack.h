@@ -44,9 +44,9 @@ struct rtrack {
 };
 
 struct scope {
-	int		level;
-	CXCursor	parent;
-	variable_t	*variables;
+	int		level;	/* scope level id */
+	CXCursor	parent;	/* cursor parent to this scope */
+	variable_t	*variables; /* variables declared in this scope */
 
 	scope_t		*prev;
 	scope_t		*next;
