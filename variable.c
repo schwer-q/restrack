@@ -78,7 +78,7 @@ variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor)
 				variable_unregister(rtrack, scope,
 						    var->next->cursor);
 
-			printf("=> desrtroyed variable \033[01;36m%s\033[00m\n",
+			printf("=> destroyed variable \033[01;36m%s\033[00m\n",
 			       var->name);
 
 			if (!var->prev)
