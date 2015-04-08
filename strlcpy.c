@@ -16,8 +16,10 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#if defined(__FreeBSD__)
 #include <sys/cdefs.h>
 __FBSDID("$FreeBSD: stable/9/lib/libc/string/strlcpy.c 189133 2009-02-28 05:15:02Z das $");
+#endif	/* __FreeBSD__ */
 
 #include <sys/types.h>
 #include <string.h>
