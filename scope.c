@@ -20,12 +20,12 @@ scope_register(rtrack_t *rtrack, CXCursor parent)
 	scope = xcalloc(1, sizeof(scope_t));
 	scope->parent = parent;
 
-	if (!rtrack->scope) {
+	if (!rtrack->scopes) {
 		scope->level = 1;
-	        rtrack->scope = scope;
+	        rtrack->scopes = scope;
 	}
 	else {
-		head = rtrack->scope;
+		head = rtrack->scopes;
 		while (head->next)
 			head = head->next;
 		scope->level = head->level + 1;
@@ -39,7 +39,7 @@ scope_unregister(rtrack_t *rtrack, CXCursor parent)
 {
 	scope_t *scope, *prev = NULL;
 
-	for (scope = rtrack->scope; scope; /* void */) {
+	for (scope = rtrack->scopes; scope; /* void */) {
 		if (clang_equalCursors(parent, scope->parent)) {
 			if (scope->next)
 				scope_unregister(rtrack, scope->next->parent);
@@ -47,7 +47,7 @@ scope_unregister(rtrack_t *rtrack, CXCursor parent)
 			rtrack->scopelvl = scope->level - 1;
 			free(scope);
 			if (!prev)
-				rtrack->scope = NULL;
+				rtrack->scopes = NULL;
 			else
 				prev->next = NULL;
 
@@ -68,7 +68,7 @@ scope_unscoped(rtrack_t *rtrack, CXCursor parent)
 	scope_t *scope;
 
 	printf("*** unscope ***\n");
-	for (scope = rtrack->scope; scope; /* void */) {
+	for (scope = rtrack->scopes; scope; /* void */) {
 		if (clang_equalCursors(parent, scope->parent))
 			return (1);
 		scope = scope->next;
