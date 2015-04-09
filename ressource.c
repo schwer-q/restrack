@@ -34,10 +34,28 @@
 #include "rtrack.h"
 #include "xalloc.h"
 
+static const char *assign_func[] = {
+	"calloc",
+	"fopen",
+	"malloc",
+	"mmap",
+	"open",
+	"realloc",
+	"socket",
+	"strdup",
+	"xcalloc",
+	"xmalloc",
+	"xopen",
+	"xrealloc",
+	"xstrdup",
+	NULL
+};
+
 static const char *release_func[] = {
 	"close",
 	"fclose",
 	"free",
+	"munmap",
 	NULL
 };
 
@@ -81,6 +99,26 @@ ressouce_release(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs)
 	printf("=> ressource released (%s) from %s\n",
 	       clang_getCString(funcname), var->name);
 	clang_disposeString(funcname);
+}
+
+int
+ressource_is_assign(CXCursor cursor)
+{
+	CXString funcname;
+	char *name;
+	int idx;
+
+	funcname = clang_getCursorSpelling(cursor);
+	name = clang_getCString(funcname);
+
+	for (idx = 0; assign_func[idx]; ++idx)
+		if (!strcmp(name, assign_func[idx]))
+			break;
+	if (!assign_func[idx])
+		return (0);
+
+	clang_disposeString(cursor);
+	return (1);
 }
 
 int
