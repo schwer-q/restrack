@@ -73,9 +73,9 @@ struct variable {
 };
 
 
-rtrack_t	*rtrack_new(const char *filename);
-void		rtrack_analyse(rtrack_t *rtrack);
-void		rtrack_free(rtrack_t *rtrack);
+rtrack_t *rtrack_new(const char *filename);
+void	rtrack_analyse(rtrack_t *rtrack);
+void	rtrack_free(rtrack_t *rtrack);
 
 void	ressouce_assign(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs);
 void	ressouce_release(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs);
