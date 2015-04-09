@@ -27,6 +27,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <clang-c/Index.h>
 #include <clang-c/CXString.h>
@@ -105,7 +106,7 @@ int
 ressource_is_assign(CXCursor cursor)
 {
 	CXString funcname;
-	char *name;
+	const char *name;
 	int idx;
 
 	funcname = clang_getCursorSpelling(cursor);
@@ -117,7 +118,7 @@ ressource_is_assign(CXCursor cursor)
 	if (!assign_func[idx])
 		return (0);
 
-	clang_disposeString(cursor);
+	clang_disposeString(funcname);
 	return (1);
 }
 
@@ -125,7 +126,7 @@ int
 ressource_is_release(CXCursor cursor)
 {
 	CXString funcname;
-	char *name;
+	const char *name;
 	int idx;
 
 	funcname = clang_getCursorSpelling(cursor);
@@ -137,6 +138,6 @@ ressource_is_release(CXCursor cursor)
 	if (!release_func[idx])
 		return (0);
 
-	clang_disposeString(cursor);
+	clang_disposeString(funcname);
 	return (1);
 }
