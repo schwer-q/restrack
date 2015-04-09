@@ -34,11 +34,18 @@
 #include "rtrack.h"
 #include "xalloc.h"
 
+static const char *release_func[] = {
+	"close",
+	"fclose",
+	"free",
+	NULL
+};
+
 void
 ressouce_assign(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs)
 {
 	variable_t *var;
-	CXString func;
+	CXString funcname;
 
 	for (var = rtrack->scopes->variables; var->next; /* void */) {
 		if (clang_equalCursors(var->cursor, varcurs))
@@ -48,17 +55,18 @@ ressouce_assign(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs)
 
 	var->ressource = xcalloc(1, sizeof(ressource_t));
 	var->ressource->assign = rescurs;
-	func = clang_getCursorSpelling(rescurs);
+	funcname = clang_getCursorSpelling(rescurs);
 
 	printf("=> ressource assigned (%s) to %s\n",
-	       clang_getCString(func), var->name);
+	       clang_getCString(funcname), var->name);
+	clang_disposeString(funcname);
 }
 
 void
 ressouce_release(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs)
 {
 	variable_t *var;
-	CXString func;
+	CXString funcname;
 
 	for (var = rtrack->scopes->variables; var->next; /* void */) {
 		if (clang_equalCursors(var->cursor, varcurs))
@@ -68,8 +76,29 @@ ressouce_release(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs)
 
 	var->ressource = xcalloc(1, sizeof(ressource_t));
 	var->ressource->release = rescurs;
-	func = clang_getCursorSpelling(rescurs);
+	funcname = clang_getCursorSpelling(rescurs);
 
 	printf("=> ressource released (%s) from %s\n",
-	       clang_getCString(func), var->name);
+	       clang_getCString(funcname), var->name);
+	clang_disposeString(funcname);
+}
+
+int
+ressource_is_release(CXCursor cursor)
+{
+	CXString funcname;
+	char *name;
+	int idx;
+
+	funcname = clang_getCursorSpelling(cursor);
+	name = clang_getCString(funcname);
+
+	for (idx = 0; release_func[idx]; ++idx)
+		if (!strcmp(name, release_func[idx]))
+			break;
+	if (!release_func[idx])
+		return (0);
+
+	clang_disposeString(cursor);
+	return (1);
 }
