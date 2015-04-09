@@ -77,6 +77,9 @@ rtrack_t	*rtrack_new(const char *filename);
 void		rtrack_analyse(rtrack_t *rtrack);
 void		rtrack_free(rtrack_t *rtrack);
 
+void	ressouce_assign(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs);
+void	ressouce_release(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs);
+
 void	scope_register(rtrack_t *rtrack, CXCursor parent);
 void	scope_unregister(rtrack_t *rtrack, CXCursor parent);
 int	scope_unscoped(rtrack_t *rtrack, CXCursor parent);
