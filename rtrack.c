@@ -143,6 +143,12 @@ visitor(CXCursor cursor, CXCursor parent, CXClientData data)
         break;
     }
 
+    case CXCursor_ReturnStmt:
+    {
+	    scope_returning(this);
+	    break;
+    }
+
     default:
         break;
     }

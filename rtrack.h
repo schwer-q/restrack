@@ -55,6 +55,8 @@ struct scope {
 	CXCursor	parent;	/* cursor parent to this scope */
 	variable_t	*variables; /* variables declared in this scope */
 
+	int		returning; /* set to 1 if returning */
+
 	scope_t		*prev;
 	scope_t		*next;
 };
@@ -85,6 +87,7 @@ int	ressource_is_release(CXCursor cursor);
 void	scope_register(rtrack_t *rtrack, CXCursor parent);
 void	scope_unregister(rtrack_t *rtrack, CXCursor parent);
 int	scope_unscoped(rtrack_t *rtrack, CXCursor parent);
+void	scope_returning(rtrack_t *rtrack);
 
 void	variable_register(rtrack_t *rtrack, CXCursor cursor);
 void	variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor);

@@ -98,3 +98,15 @@ scope_unscoped(rtrack_t *rtrack, CXCursor parent)
 	}
 	return (0);
 }
+
+void
+scope_returning(rtrack_t *rtrack)
+{
+	scope_t *scope;
+
+	for (scope = rtrack->scopes; scope->next; /* void */)
+		scope = scope->next;
+	scope->returning = 1;
+	printf("=> scope \033[01;31m#%d\033[00m is returning\n",
+	       scope->level);
+}
