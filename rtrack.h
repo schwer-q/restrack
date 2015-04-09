@@ -37,12 +37,12 @@ typedef struct scope scope_t;
 typedef struct variable variable_t;
 
 struct rtrack {
-    char                *filename;
-    CXIndex             index;
-    CXTranslationUnit   tu;
+	char			*filename;
+	CXIndex			index;
+	CXTranslationUnit	tu;
 
-    int                 scopelvl; /* current scope level */
-    scope_t             *scopes;  /* scope hold in this tu */
+	int		scopelvl; /* current scope level */
+	scope_t		*scopes;  /* scope hold in this tu */
 };
 
 struct ressource {
@@ -51,35 +51,37 @@ struct ressource {
 };
 
 struct scope {
-    int                 level;    /* scope level id */
-    CXCursor            parent;    /* cursor parent to this scope */
-    variable_t          *variables; /* variables declared in this scope */
+	int		level;	/* scope level id */
+	CXCursor	parent;	/* cursor parent to this scope */
+	variable_t	*variables; /* variables declared in this scope */
 
-    scope_t             *prev;
-    scope_t             *next;
+	scope_t		*prev;
+	scope_t		*next;
 };
 
 struct variable {
-    char                *name;     /* variable name */
-    char                *typename; /* type name */
+	char		*name;	/* variable name */
+	char		*typename; /* type name */
 
-    CXCursor            cursor;    /* cursor reference */
-    CXType              type;      /* type information */
+	CXCursor	cursor;	/* cursor reference */
+	CXType		type;	/* type information */
 
-    ressource_t         *ressource; /* XXX: drop the _ when the 3 vars go away */
-    variable_t          *prev;
-    variable_t          *next;
+	ressource_t	*ressource;
+
+	variable_t	*prev;
+	variable_t	*next;
 };
 
-rtrack_t    *rtrack_new(const char *filename);
-void        rtrack_analyse(rtrack_t *rtrack);
-void        rtrack_free(rtrack_t *rtrack);
 
-void    scope_register(rtrack_t *rtrack, CXCursor parent);
-void    scope_unregister(rtrack_t *rtrack, CXCursor parent);
-int    scope_unscoped(rtrack_t *rtrack, CXCursor parent);
+rtrack_t	*rtrack_new(const char *filename);
+void		rtrack_analyse(rtrack_t *rtrack);
+void		rtrack_free(rtrack_t *rtrack);
 
-void    variable_register(rtrack_t *rtrack, CXCursor cursor);
-void    variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor);
+void	scope_register(rtrack_t *rtrack, CXCursor parent);
+void	scope_unregister(rtrack_t *rtrack, CXCursor parent);
+int	scope_unscoped(rtrack_t *rtrack, CXCursor parent);
 
-#endif    /* __RTRACK_H */
+void	variable_register(rtrack_t *rtrack, CXCursor cursor);
+void	variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor);
+
+#endif	/* __RTRACK_H */
