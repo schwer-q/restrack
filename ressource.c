@@ -72,6 +72,7 @@ ressouce_assign(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs)
 
 	var->ressource = xcalloc(1, sizeof(ressource_t));
 	var->ressource->assign = rescurs;
+	var->ressource->release = clang_getNullCursor();
 	funcname = clang_getCursorSpelling(rescurs);
 
 	printf("=> ressource assigned (%s) to %s\n",
