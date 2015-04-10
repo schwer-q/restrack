@@ -133,11 +133,9 @@ visitor(CXCursor cursor, CXCursor parent, CXClientData data)
 
 	    }
 	    else if (scope_is_returning(this)) {
-		    if (variable_is_ressource(this, cursor)) {
-			    /*
-			     * XXX: Mark the function as an allocator
-			     */
-		    }
+		    /*
+		     * XXX: Nothing...
+		     */
 	    }
 
 

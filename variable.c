@@ -90,11 +90,15 @@ variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor)
 			else
 				var->prev->next = NULL;
 
-			if (var->ressource) {
+			if (var->ressource && !scope->returning) {
 				if (clang_Cursor_isNull(
 					    var->ressource->release))
 					printf("==> \033[01;05mthe allocated ressource has"
 					       " not been released.\033[00m\n");
+			}
+			if (scope->returning) {
+				printf("=> returning variable \033[01;36m%s\033[00m\n",
+				       var->name);
 			}
 			free(var->name);
 			free(var->typename);
