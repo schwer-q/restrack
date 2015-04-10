@@ -133,9 +133,7 @@ visitor(CXCursor cursor, CXCursor parent, CXClientData data)
 
 	    }
 	    else if (scope_is_returning(this)) {
-		    /*
-		     * XXX: Nothing...
-		     */
+		    variable_returned(this, cursor);
 	    }
 
 

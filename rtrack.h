@@ -76,6 +76,7 @@ struct variable {
 	CXType		type;	/* type information */
 
 	ressource_t	*ressource;
+	int		returned;
 
 	variable_t	*prev;
 	variable_t	*next;
@@ -107,5 +108,6 @@ void	variable_register(rtrack_t *rtrack, CXCursor cursor);
 void	variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor);
 int	variable_is_ressource(rtrack_t *rtrack, CXCursor cursor);
 variable_t *variable_find(rtrack_t *rtrack, const char *vname);
+void	variable_returned(rtrack_t *rtrack, CXCursor cursor);
 
 #endif	/* __RTRACK_H */

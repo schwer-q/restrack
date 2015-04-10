@@ -90,13 +90,13 @@ variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor)
 			else
 				var->prev->next = NULL;
 
-			if (var->ressource && !scope->returning) {
+			if (var->ressource && !var->returned) {
 				if (clang_Cursor_isNull(
 					    var->ressource->release))
 					printf("==> \033[01;05mthe allocated ressource has"
 					       " not been released.\033[00m\n");
 			}
-			if (scope->returning) {
+			if (var->returned) {
 				printf("=> returning variable \033[01;36m%s\033[00m\n",
 				       var->name);
 			}
@@ -154,4 +154,25 @@ variable_is_ressource(rtrack_t *rtrack, CXCursor cursor)
 	if (!var->ressource)	/* no ressources allocated. */
 		return (0);
 	return (1);
+}
+
+
+void
+variable_returned(rtrack_t *rtrack, CXCursor cursor)
+{
+	variable_t *var;
+	CXString varname;
+	const char *vname;
+
+	varname = clang_getCursorSpelling(cursor);
+	vname = clang_getCString(varname);
+
+	var = variable_find(rtrack, vname);
+	clang_disposeString(varname);
+
+	if (!var)		/* variable does not live in current scope */
+		return;
+
+	var->returned = 1;
+	return;
 }
