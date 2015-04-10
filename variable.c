@@ -74,7 +74,7 @@ variable_register(rtrack_t *rtrack, CXCursor cursor)
 void
 variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor)
 {
-	variable_t *var;
+	variable_t *var, *var1 = NULL;
 
 	for (var = scope->variables; var; /* void */) {
 		if (clang_equalCursors(var->cursor, cursor)) {
@@ -102,10 +102,14 @@ variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor)
 			}
 			free(var->name);
 			free(var->typename);
-			free(var);
+			var1 = var;
 
 		}
 		var = var->next;
+		if (var1) {
+			free(var1);
+			var1 = NULL;
+		}
 	}
 }
 
