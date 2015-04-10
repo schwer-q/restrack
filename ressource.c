@@ -65,12 +65,10 @@ ressouce_assign(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs)
 {
 	variable_t *var;
 	CXString funcname;
+	CXString varname;
 
-	for (var = rtrack->scopes->variables; var->next; /* void */) {
-		if (clang_equalCursors(var->cursor, varcurs))
-			break;
-		var = var->next;
-	}
+	varname = clang_getCursorSpelling(varcurs);
+	var = variable_find(rtrack, clang_getCString(varname));
 
 	var->ressource = xcalloc(1, sizeof(ressource_t));
 	var->ressource->assign = rescurs;
@@ -79,6 +77,7 @@ ressouce_assign(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs)
 	printf("=> ressource assigned (%s) to %s\n",
 	       clang_getCString(funcname), var->name);
 	clang_disposeString(funcname);
+	clang_disposeString(varname);
 }
 
 void
