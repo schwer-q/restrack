@@ -27,6 +27,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include <clang-c/Index.h>
 #include <clang-c/CXString.h>
@@ -102,4 +103,51 @@ variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor)
 		}
 		var = var->next;
 	}
+}
+
+variable_t *
+variable_find(rtrack_t *rtrack, const char *vname)
+{
+	scope_t *scope;
+	variable_t *var;
+
+	for (scope = rtrack->scopes; scope; /* void */) {
+		for (var = scope->variables; var; /* void */) {
+			if (!strcmp(var->name, vname))
+				return (var);
+		}
+		scope = scope->next;
+	}
+	return (NULL);
+}
+
+int
+variable_is_ressource(rtrack_t *rtrack, CXCursor cursor)
+{
+	scope_t *scope;
+	variable_t *var;
+	CXString varname;
+	const char *vname;
+
+	varname = clang_getCursorSpelling(cursor);
+	vname = clang_getCString(varname);
+
+	for (scope = rtrack->scopes; scope->next; /* void */) {
+		for (var = scope->variables; var; /* void */) {
+			if (!strcmp(var->name, vname))
+				break;
+		}
+		if (var)
+			break;
+		scope = scope->next;
+	}
+
+	clang_disposeString(varname);
+
+	if (!var)		/* variable does not live in current scope */
+		return (0);
+
+	if (!var->ressource)	/* no ressources allocated. */
+		return (0);
+	return (1);
 }

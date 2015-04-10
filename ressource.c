@@ -86,20 +86,19 @@ ressouce_release(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs)
 {
 	variable_t *var;
 	CXString funcname;
+	CXString varname;
 
-	for (var = rtrack->scopes->variables; var->next; /* void */) {
-		if (clang_equalCursors(var->cursor, varcurs))
-			break;
-		var = var->next;
-	}
-
-	var->ressource = xcalloc(1, sizeof(ressource_t));
+	varname = clang_getCursorSpelling(varcurs);
+	var = variable_find(rtrack, clang_getCString(varname));
+	if (!var || !var->ressource)
+		return;
 	var->ressource->release = rescurs;
 	funcname = clang_getCursorSpelling(rescurs);
 
 	printf("=> ressource released (%s) from %s\n",
 	       clang_getCString(funcname), var->name);
 	clang_disposeString(funcname);
+	clang_disposeString(varname);
 }
 
 int

@@ -43,6 +43,8 @@ struct rtrack {
 
 	int		scopelvl; /* current scope level */
 	scope_t		*scopes;  /* scope hold in this tu */
+
+	CXCursor	lastfunc;
 };
 
 struct ressource {
@@ -54,6 +56,8 @@ struct scope {
 	int		level;	/* scope level id */
 	CXCursor	parent;	/* cursor parent to this scope */
 	variable_t	*variables; /* variables declared in this scope */
+
+	int		calling;   /* set to 1 if in callexpr */
 
 	int		returning; /* set to 1 if returning */
 
@@ -87,9 +91,14 @@ int	ressource_is_release(CXCursor cursor);
 void	scope_register(rtrack_t *rtrack, CXCursor parent);
 void	scope_unregister(rtrack_t *rtrack, CXCursor parent);
 int	scope_unscoped(rtrack_t *rtrack, CXCursor parent);
+void	scope_set_call(rtrack_t *rtrack, int status);
+int	scope_is_calling(rtrack_t *rtrack);
 void	scope_returning(rtrack_t *rtrack);
+int	scope_is_returning(rtrack_t *rtrack);
 
 void	variable_register(rtrack_t *rtrack, CXCursor cursor);
 void	variable_unregister(rtrack_t *rtrack, scope_t *scope, CXCursor cursor);
+int	variable_is_ressource(rtrack_t *rtrack, CXCursor cursor);
+variable_t *variable_find(rtrack_t *rtrack, const char *vname);
 
 #endif	/* __RTRACK_H */

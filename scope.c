@@ -100,6 +100,38 @@ scope_unscoped(rtrack_t *rtrack, CXCursor parent)
 }
 
 void
+scope_set_call(rtrack_t *rtrack, int status)
+{
+	scope_t *scope;
+
+	for (scope = rtrack->scopes; scope->next; /* void */)
+		scope = scope->next;
+	scope->calling = status;
+	/* scope->caller = clang_getNullCursor(); */
+}
+
+int
+scope_is_calling(rtrack_t *rtrack)
+{
+	scope_t *scope;
+
+	for (scope = rtrack->scopes; scope->next; /* void */)
+		scope = scope->next;
+	return (scope->calling);
+}
+
+/* void */
+/* scope_caller(rtrack_t *rtrack, CXCursor cursor) */
+/* { */
+/* 	scope_t *scope; */
+
+/* 	for (scope = rtrack->scopes; scope->next; /\* void *\/) */
+/* 		scope = scope->next; */
+/* 	scope->calling = 1; */
+/* 	scope->caller = clang_getNullCursor(); */
+/* } */
+
+void
 scope_returning(rtrack_t *rtrack)
 {
 	scope_t *scope;
@@ -109,4 +141,14 @@ scope_returning(rtrack_t *rtrack)
 	scope->returning = 1;
 	printf("=> scope \033[01;31m#%d\033[00m is returning\n",
 	       scope->level);
+}
+
+int
+scope_is_returning(rtrack_t *rtrack)
+{
+	scope_t *scope;
+
+	for (scope = rtrack->scopes; scope->next; /* void */)
+		scope = scope->next;
+	return (scope->returning);
 }
