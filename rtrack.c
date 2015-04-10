@@ -98,6 +98,11 @@ visitor(CXCursor cursor, CXCursor parent, CXClientData data)
     }
 
     switch (clang_getCursorKind(cursor)) {
+    case CXCursor_BinaryOperator: {
+	    scope_set_binop(this, 1);
+	    break;
+    }
+
     case CXCursor_CompoundStmt: {
         scope_register(this, parent);
         printf("=> scope has changed: new scope \033[01;31m#%d\033[00m\n", this->scopelvl);
@@ -105,35 +110,44 @@ visitor(CXCursor cursor, CXCursor parent, CXClientData data)
     }
 
     case CXCursor_DeclRefExpr: {
-	if (scope_is_calling(this)) {
-		/* We are in a CallExpr */
-		if (clang_Cursor_isNull(this->lastfunc)) {
-			/* lastfunc has not been set yet. The cursor point to the called function */
-			this->lastfunc = cursor;
-		}
-		else {
-			ressouce_release(this, cursor, this->lastfunc);
-			this->lastfunc = clang_getNullCursor();
-			scope_set_call(this, 0);
-		}
+	    if (scope_is_assign(this)) {
+		    ressouce_assign(this, this->lastvar, cursor);
+		    this->lastvar = clang_getNullCursor();
+		    scope_set_assign(this, 0);
+	    }
+	    else if (scope_is_binop(this)) {
+		    this->lastvar = cursor;
+		    scope_set_binop(this, 0);
+	    }
+	    else if (scope_is_calling(this)) {
+		    /* We are in a CallExpr */
+		    if (clang_Cursor_isNull(this->lastfunc)) {
+			    /* lastfunc has not been set yet. The cursor point to the called function */
+			    this->lastfunc = cursor;
+		    }
+		    else {
+			    ressouce_release(this, cursor, this->lastfunc);
+			    this->lastfunc = clang_getNullCursor();
+			    scope_set_call(this, 0);
+		    }
 
-	}
-	else if (scope_is_returning(this)) {
-		if (variable_is_ressource(this, cursor)) {
-			/*
-			 * XXX: Mark the function as an allocator
-			 */
-		}
-	}
+	    }
+	    else if (scope_is_returning(this)) {
+		    if (variable_is_ressource(this, cursor)) {
+			    /*
+			     * XXX: Mark the function as an allocator
+			     */
+		    }
+	    }
 
 
 	    break;
     }
 
     case CXCursor_FunctionDecl: {
-        CXString name = clang_getCursorSpelling(cursor);
-        printf("=> found function declaration: %s\n", clang_getCString(name));
-        clang_disposeString(name);
+	    CXString name = clang_getCursorSpelling(cursor);
+	    printf("=> found function declaration: %s\n", clang_getCString(name));
+	    clang_disposeString(name);
 
         scope_register(this, parent);
         printf("=> scope has changed: new scope \033[01;31m#%d\033[00m\n", this->scopelvl);
@@ -148,14 +162,13 @@ visitor(CXCursor cursor, CXCursor parent, CXClientData data)
 
         printf("=> found call declaration: \033[01;36m%s\033[00m \033[32m'%s'\033[00m\n",
                clang_getCString(name), clang_getCString(typename));
-        /* variable_register(this, cursor); */
 	clang_disposeString(name);
         clang_disposeString(typename);
 
 	if (ressource_is_assign(cursor)) {
-		/*
-		 * XXX:
-		 */
+		printf("==> assign function call\n");
+		scope_set_assign(this, 1);
+		this->lastfunc = clang_getNullCursor();
 	}
 	else if (ressource_is_release(cursor)) {
 		printf("==> release function call\n");

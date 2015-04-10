@@ -59,7 +59,9 @@ struct scope {
 	variable_t	*variables; /* variables declared in this scope */
 
 	int		calling;   /* set to 1 if in callexpr */
+	int		assigning; /* set to 1 if in callexpr */
 
+	int		binop;
 	int		returning; /* set to 1 if returning */
 
 	scope_t		*prev;
@@ -94,6 +96,10 @@ void	scope_unregister(rtrack_t *rtrack, CXCursor parent);
 int	scope_unscoped(rtrack_t *rtrack, CXCursor parent);
 void	scope_set_call(rtrack_t *rtrack, int status);
 int	scope_is_calling(rtrack_t *rtrack);
+void	scope_set_binop(rtrack_t *rtrack, int status);
+int	scope_is_binop(rtrack_t *rtrack);
+void	scope_set_assign(rtrack_t *rtrack, int status);
+int	scope_is_assign(rtrack_t *rtrack);
 void	scope_returning(rtrack_t *rtrack);
 int	scope_is_returning(rtrack_t *rtrack);
 

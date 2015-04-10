@@ -120,16 +120,47 @@ scope_is_calling(rtrack_t *rtrack)
 	return (scope->calling);
 }
 
-/* void */
-/* scope_caller(rtrack_t *rtrack, CXCursor cursor) */
-/* { */
-/* 	scope_t *scope; */
+void
+scope_set_assign(rtrack_t *rtrack, int status)
+{
+	scope_t *scope;
 
-/* 	for (scope = rtrack->scopes; scope->next; /\* void *\/) */
-/* 		scope = scope->next; */
-/* 	scope->calling = 1; */
-/* 	scope->caller = clang_getNullCursor(); */
-/* } */
+	for (scope = rtrack->scopes; scope->next; /* void */)
+		scope = scope->next;
+	scope->assigning = status;
+	/* scope->caller = clang_getNullCursor(); */
+}
+
+int
+scope_is_assign(rtrack_t *rtrack)
+{
+	scope_t *scope;
+
+	for (scope = rtrack->scopes; scope->next; /* void */)
+		scope = scope->next;
+	return (scope->assigning);
+}
+
+void
+scope_set_binop(rtrack_t *rtrack, int status)
+{
+	scope_t *scope;
+
+	for (scope = rtrack->scopes; scope->next; /* void */)
+		scope = scope->next;
+	scope->binop = status;
+	/* scope->caller = clang_getNullCursor(); */
+}
+
+int
+scope_is_binop(rtrack_t *rtrack)
+{
+	scope_t *scope;
+
+	for (scope = rtrack->scopes; scope->next; /* void */)
+		scope = scope->next;
+	return (scope->binop);
+}
 
 void
 scope_returning(rtrack_t *rtrack)
