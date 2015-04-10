@@ -69,6 +69,8 @@ ressouce_assign(rtrack_t *rtrack, CXCursor varcurs, CXCursor rescurs)
 
 	varname = clang_getCursorSpelling(varcurs);
 	var = variable_find(rtrack, clang_getCString(varname));
+	if (!var)
+		return;
 
 	var->ressource = xcalloc(1, sizeof(ressource_t));
 	var->ressource->assign = rescurs;

@@ -187,6 +187,8 @@ visitor(CXCursor cursor, CXCursor parent, CXClientData data)
                clang_getCString(name), clang_getCString(typename));
         clang_disposeString(name);
         clang_disposeString(typename);
+	if (!this->scopes)
+		scope_register(this, parent);
         variable_register(this, cursor);
         break;
     }
