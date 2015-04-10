@@ -45,6 +45,7 @@ struct rtrack {
 	scope_t		*scopes;  /* scope hold in this tu */
 
 	CXCursor	lastfunc;
+	CXCursor	lastvar;
 };
 
 struct ressource {
