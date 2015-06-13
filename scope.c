@@ -90,7 +90,7 @@ scope_unscoped(rtrack_t *rtrack, CXCursor parent)
 {
 	scope_t *scope;
 
-	printf("*** unscope ***\n");
+	/* printf("*** unscope ***\n"); */
 	for (scope = rtrack->scopes; scope; /* void */) {
 		if (clang_equalCursors(parent, scope->parent))
 			return (1);
