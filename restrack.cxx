@@ -102,9 +102,10 @@ RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 		clang::FullSourceLoc FullLocation =
 			this->Context->getFullLoc(Declaration->getLocStart());
 		if (FullLocation.isValid()) {
-			llvm::outs() << "Found declaration at "
-				     << FullLocation.getSpellingLineNumber() << ":"
-				     << FullLocation.getSpellingColumnNumber() << "\n";
+			// llvm::outs() << "Found declaration at "
+			// 	     << FullLocation.getSpellingLineNumber() << ":"
+			// 	     << FullLocation.getSpellingColumnNumber() << "\n";
+			Declaration->dump();
 		}
 	}
 	return (true);
