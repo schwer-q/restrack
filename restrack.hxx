@@ -29,13 +29,30 @@
 #define __RESTRACK_HH
 
 namespace {
-	class RessourceTrackerConsumer : public clang::ASTConsumer {
+	class RessourceTrackerVisitor :
+		public clang::RecursiveASTVisitor<RessourceTrackerVisitor> {
+	private:
+		clang::ASTContext *Context;
 
+	public:
+		explicit RessourceTrackerVisitor(clang::ASTContext *);
+
+		bool VisitCXXRecordDecl(clang::CXXRecordDecl *);
+	}
+
+	class RessourceTrackerConsumer : public clang::ASTConsumer {
+	private:
+		explicit RessourceTrackerConsumer(clang::ASTContext *);
+
+		RessourceTrackerVisitor Visitor;
+
+	public:
+		virtual void HandleTranslationUnit(clang::ASTContext&);
 	};
 
 	class RessourceTrackerAction : public clang::PluginASTAction {
 	public:
-		std::unique_ptr<clang::ASTConsumer> CreateASTConsumer(
+		virtual std::unique_ptr<clang::ASTConsumer> CreateASTConsumer(
 			clang::CompilerInstance&, llvm::StringRef);
 		bool ParseArgs(const clang::CompilerInstance&,
 			       const std::vector<std::string>&);

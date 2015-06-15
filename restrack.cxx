@@ -33,7 +33,7 @@
 
 #include "restrack.hxx"
 
-using namespace clang;
+// using namespace clang;
 
 #if 0
 namespace {
@@ -86,7 +86,42 @@ namespace {
 }
 #endif	// 0
 
-std::unique_ptr<clang::ASTConsumer>
+explicit
+RessourceTrackerVisitor::RessourceTrackerVisitor(clang::ASTContext *Context) :
+	Context(Context)
+{
+
+}
+
+bool
+RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
+{
+	if (Declaration->getQualifiedNameAsString() == "n::m::C") {
+		clang::FullSourceLoc FullLocation =
+			this->Context->getFullLoc(Declaration->getLocStart());
+		if (FullLocation.isValid()) {
+			llvm::outs() << "Found declaration at "
+				     << FullLocation.getSpellingLineNumber() << ":"
+				     << FullLocation.getSpellingColumnNumber() << "\n";
+		}
+	}
+	return (true);
+}
+
+explicit
+RessourceTrackerConsumer::RessourceTrackerConsumer(clang::ASTContext *Context) :
+	Visitor(Context)
+{
+
+}
+
+virtual void
+RessourceTrackerConsumer::HandleTranslationUnit(clang::ASTContext &Context)
+{
+	this->Visitor.TraverseDecl(Context.getTranslationUnitDecl());
+}
+
+virtual std::unique_ptr<clang::ASTConsumer>
 RessourceTrackerAction::CreateASTConsumer(clang::CompilerInstance &Compiler,
 					  llvm::StringRef Infile)
 {
