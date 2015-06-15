@@ -25,9 +25,11 @@
  *
  */
 
-#include "clang/AST/AST.h"
+//#include "clang/AST/AST.h"
 #include "clang/AST/ASTConsumer.h"
+#include "clang/AST/RecursiveASTVisitor.h"
 #include "clang/Frontend/CompilerInstance.h"
+#include "clang/Frontend/FrontentAction.h"
 #include "clang/Frontend/FrontendPluginRegistry.h"
 #include "llvm/Support/raw_ostream.h"
 
@@ -130,7 +132,7 @@ RessourceTrackerAction::CreateASTConsumer(clang::CompilerInstance &Compiler,
 }
 
 bool
-RessourceTrackerAction::ParseArgs(const CompilerInstance &Compiler,
+RessourceTrackerAction::ParseArgs(const clang::CompilerInstance &Compiler,
 				  const std::vector<std::string> &args)
 {
 	for (unsigned i = 0, e = args.size(); i != e; ++i) {
