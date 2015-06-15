@@ -117,13 +117,13 @@ RessourceTrackerConsumer::RessourceTrackerConsumer(clang::ASTContext *Context) :
 
 }
 
-virtual void
+/* virtual */ void
 RessourceTrackerConsumer::HandleTranslationUnit(clang::ASTContext &Context)
 {
 	this->Visitor.TraverseDecl(Context.getTranslationUnitDecl());
 }
 
-virtual std::unique_ptr<clang::ASTConsumer>
+/* virtual */ std::unique_ptr<clang::ASTConsumer>
 RessourceTrackerAction::CreateASTConsumer(clang::CompilerInstance &Compiler,
 					  llvm::StringRef Infile)
 {
