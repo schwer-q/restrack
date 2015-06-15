@@ -110,7 +110,8 @@ RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 bool
 RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 {
-	Declaration->dump();
+	if (Declaration->isLocalVarDecl())
+		Declaration->dump();
 	return (true);
 }
 
