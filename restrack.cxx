@@ -107,10 +107,10 @@ RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 	return (true);
 }
 
-RessourceTrackerConsumer::RessourceTrackerConsumer(clang::ASTContext *Context)//  :
-	// Visitor(Context)
+RessourceTrackerConsumer::RessourceTrackerConsumer(clang::ASTContext *Context) :
+	Visitor(Context)
 {
-	this->Visitor = Context;
+
 }
 
 void
