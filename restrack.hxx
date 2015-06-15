@@ -38,6 +38,7 @@ namespace {
 		explicit RessourceTrackerVisitor(clang::ASTContext *);
 
 		bool VisitCXXRecordDecl(clang::CXXRecordDecl *);
+		bool VisitVarDecl(clang::VarDecl *);
 	};
 
 	class RessourceTrackerConsumer : public clang::ASTConsumer {

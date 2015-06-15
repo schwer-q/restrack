@@ -107,6 +107,13 @@ RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 	return (true);
 }
 
+bool
+RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
+{
+	Declaration->dump();
+	return (true);
+}
+
 RessourceTrackerConsumer::RessourceTrackerConsumer(clang::ASTContext *Context) :
 	Visitor(Context)
 {
