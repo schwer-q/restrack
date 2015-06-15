@@ -42,11 +42,11 @@ namespace {
 
 	class RessourceTrackerConsumer : public clang::ASTConsumer {
 	private:
-		explicit RessourceTrackerConsumer(clang::ASTContext *);
-
 		RessourceTrackerVisitor Visitor;
 
 	public:
+		explicit RessourceTrackerConsumer(clang::ASTContext *);
+
 		virtual void HandleTranslationUnit(clang::ASTContext&);
 	};
 
