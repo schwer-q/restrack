@@ -88,7 +88,7 @@ namespace {
 }
 #endif	// 0
 
-explicit
+//explicit
 RessourceTrackerVisitor::RessourceTrackerVisitor(clang::ASTContext *Context) :
 	Context(Context)
 {
@@ -110,7 +110,7 @@ RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 	return (true);
 }
 
-explicit
+//explicit
 RessourceTrackerConsumer::RessourceTrackerConsumer(clang::ASTContext *Context) :
 	Visitor(Context)
 {

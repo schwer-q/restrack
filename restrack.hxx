@@ -38,7 +38,7 @@ namespace {
 		explicit RessourceTrackerVisitor(clang::ASTContext *);
 
 		bool VisitCXXRecordDecl(clang::CXXRecordDecl *);
-	}
+	};
 
 	class RessourceTrackerConsumer : public clang::ASTConsumer {
 	private:
