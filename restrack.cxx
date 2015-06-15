@@ -35,8 +35,6 @@
 
 #include "restrack.hxx"
 
-// using namespace clang;
-
 #if 0
 namespace {
 
@@ -88,11 +86,9 @@ namespace {
 }
 #endif	// 0
 
-//explicit
-RessourceTrackerVisitor::RessourceTrackerVisitor(clang::ASTContext *Context) :
-	Context(Context)
+RessourceTrackerVisitor::RessourceTrackerVisitor(clang::ASTContext *Context)
 {
-
+	this->Context = Context;
 }
 
 bool
@@ -111,20 +107,19 @@ RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 	return (true);
 }
 
-//explicit
 RessourceTrackerConsumer::RessourceTrackerConsumer(clang::ASTContext *Context) :
 	Visitor(Context)
 {
 
 }
 
-/* virtual */ void
+void
 RessourceTrackerConsumer::HandleTranslationUnit(clang::ASTContext &Context)
 {
 	this->Visitor.TraverseDecl(Context.getTranslationUnitDecl());
 }
 
-/* virtual */ std::unique_ptr<clang::ASTConsumer>
+std::unique_ptr<clang::ASTConsumer>
 RessourceTrackerAction::CreateASTConsumer(clang::CompilerInstance &Compiler,
 					  llvm::StringRef Infile)
 {
