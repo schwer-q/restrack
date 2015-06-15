@@ -31,7 +31,7 @@
 #include "clang/Frontend/FrontendPluginRegistry.h"
 #include "llvm/Support/raw_ostream.h"
 
-#include "restrack.hh"
+#include "restrack.hxx"
 
 using namespace clang;
 
