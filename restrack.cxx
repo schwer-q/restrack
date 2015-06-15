@@ -128,7 +128,7 @@ RessourceTrackerAction::CreateASTConsumer(clang::CompilerInstance &Compiler,
 					  llvm::StringRef Infile)
 {
 	return (std::unique_ptr<clang::ASTConsumer>(
-			new RessourceTrackerConsumer));
+			new RessourceTrackerConsumer(&Compiler.getASTContext())));
 }
 
 bool
@@ -141,5 +141,5 @@ RessourceTrackerAction::ParseArgs(const clang::CompilerInstance &Compiler,
 	return (true);
 }
 
-static FrontendPluginRegistry::Add<RessourceTrackerAction>
+static clang::FrontendPluginRegistry::Add<RessourceTrackerAction>
 X("restrack", "track ressources for potential leaks");
