@@ -122,7 +122,7 @@ RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 {
 	std::string varName = Declaration->getNameAsString();
 
-	if (clang::ParmVarDecl *ParmVarDecl = llvm::dyn_cast<clang::ParmVarDecl *>(Declaration))
+	if (clang::ParmVarDecl::classof(Declaration))
 		return (true);
 	if (varName.length())
 		llvm::outs() << "VisitVarDecl: <" << varName << ">\n";
