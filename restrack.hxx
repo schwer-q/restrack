@@ -38,6 +38,7 @@ namespace {
 		explicit RessourceTrackerVisitor(clang::ASTContext *);
 
 		bool VisitCXXRecordDecl(clang::CXXRecordDecl *);
+		bool VisitParmVarDecl(clang::ParmVarDecl *);
 		bool VisitVarDecl(clang::VarDecl *);
 	};
 
