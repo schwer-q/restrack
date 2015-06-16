@@ -110,7 +110,7 @@ RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 bool
 RessourceTrackerVisitor::VisitParmVarDecl(clang::ParmVarDecl *Declaration)
 {
-	std::string varName = Declaration->getNAmeAsString();
+	std::string varName = Declaration->getNameAsString();
 	llvm::outs() << "VisitParmVarDecl: <" << varName << ">\n";
 
 	return (true);
