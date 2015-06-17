@@ -130,7 +130,7 @@ RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 		return (true);
 
 	llvm::outs() << BGREEN << "VarDecl" << RESET
-		     << BCYAN << varName << RESET;
+		     << BCYAN << "" << varName << RESET;
 	if (Declaration->hasInit()) {
 		switch (Declaration->getInitStyle()) {
 		case clang::VarDecl::CInit: llvm::outs() << " cinit"; break;
