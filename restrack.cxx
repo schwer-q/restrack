@@ -124,8 +124,10 @@ RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 
 	if (clang::ParmVarDecl::classof(Declaration))
 		return (true);
-	if (varName.length())
+	if (varName.length()) {
 		llvm::outs() << "VisitVarDecl: <" << varName << ">\n";
+		Declaration->dump();
+	}
 	return (true);
 }
 
