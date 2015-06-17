@@ -123,7 +123,7 @@ RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 	std::string varName = Declaration->getNameAsString();
 	clang::StorageClass SC = Declaration->getStorageClass();
 
-	if (SC != SC_None)
+	if (SC != clang::SC_None)
 		llvm::outs() << clang::VarDecl::getStorageClassSpecifierString(SC);
 
 	if (clang::ParmVarDecl::classof(Declaration))
