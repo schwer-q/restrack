@@ -121,6 +121,7 @@ bool
 RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 {
 	std::string varName = Declaration->getNameAsString();
+	clang::QualType varType = Declaration->getType();
 	clang::StorageClass SC = Declaration->getStorageClass();
 
 	if (SC != clang::SC_None)
@@ -130,7 +131,8 @@ RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 		return (true);
 
 	llvm::outs() << BGREEN << "VarDecl" << RESET
-		     << BCYAN << " " << varName << RESET;
+		     << BCYAN << " " << varName << RESET
+		     << GREEN << " '" << clang::QualType::getAsString(varType.split()) << "'" << RESET;
 	if (Declaration->hasInit()) {
 		switch (Declaration->getInitStyle()) {
 		case clang::VarDecl::CInit: llvm::outs() << " cinit"; break;
