@@ -126,7 +126,8 @@ RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 		return (true);
 	if (varName.length()) {
 		llvm::outs() << "VisitVarDecl: <" << varName << ">\n";
-		Declaration->dump();
+		if (Declaration->getInit())
+			llvm::outs() << "\thas initialization\n";
 	}
 	return (true);
 }
