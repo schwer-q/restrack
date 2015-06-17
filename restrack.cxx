@@ -121,13 +121,18 @@ bool
 RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 {
 	std::string varName = Declaration->getNameAsString();
+	StorageClass SC = Declaration->getStorageClass();
+
+	if (SC != SC_None)
+		llvm::outs() << VarDecl::getStorageClassSpecifierString(SC);
 
 	if (clang::ParmVarDecl::classof(Declaration))
 		return (true);
 	if (varName.length()) {
 		llvm::outs() << "VisitVarDecl: <" << varName << ">\n";
-		if (Declaration->getInit())
-			llvm::outs() << "\thas initialization\n";
+		if (Declaration->hasInit()) {
+			// XXX:
+		}
 	}
 	return (true);
 }
