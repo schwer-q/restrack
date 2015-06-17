@@ -128,12 +128,17 @@ RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 
 	if (clang::ParmVarDecl::classof(Declaration))
 		return (true);
-	if (varName.length()) {
-		llvm::outs() << "VisitVarDecl: <" << varName << ">\n";
-		if (Declaration->hasInit()) {
-			// XXX:
+
+	llvm::outs() << BGREEN << "VarDecl" << RESET
+		     << BCYAN << varName << RESET;
+	if (Declaration->hasInit()) {
+		switch (Declaration->getInitStyle()) {
+		case clang::VarDecl::CInit: llvm::outs() << " cinit"; break;
+		case clang::VarDecl::CallInit: llvm::outs() << " callinit"; break;
+		case clang::VarDecl::ListInit: llvm::outs() << " listinit"; break;
 		}
 	}
+	llvm::outs() << "\n";
 	return (true);
 }
 
