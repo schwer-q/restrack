@@ -108,6 +108,20 @@ RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 }
 
 bool
+RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *DeclExpr)
+{
+	std::string exprName = DeclExpr->getNameAsString();
+	llvm::outs() << "DeclRefExpr: " << exprName << "\n";
+	return (true);
+}
+
+bool
+RessourceTrackerVisitor::VisitExpr(clang::Expr *Expression)
+{
+
+}
+
+bool
 RessourceTrackerVisitor::VisitParmVarDecl(clang::ParmVarDecl *Declaration)
 {
 	std::string varName = Declaration->getNameAsString();
