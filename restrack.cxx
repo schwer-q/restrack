@@ -115,7 +115,8 @@ bool
 RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *DeclExpr)
 {
 	std::string exprName = DeclExpr->getDecl()->getNameAsString();
-	llvm::outs() << "DeclRefExpr: " << exprName << "\n";
+	llvm::outs() << BPINK << "DeclRefExpr" << RESET
+		     << BBLUE << " '" << exprName << "'" << RESET << "\n";
 	return (true);
 }
 
