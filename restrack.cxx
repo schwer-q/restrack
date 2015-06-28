@@ -91,6 +91,8 @@ RessourceTrackerVisitor::RessourceTrackerVisitor(clang::ASTContext *Context)
 	this->Context = Context;
 }
 
+#if 0
+
 bool
 RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 {
@@ -106,6 +108,8 @@ RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 	}
 	return (true);
 }
+
+#endif	// 0
 
 bool
 RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *DeclExpr)
