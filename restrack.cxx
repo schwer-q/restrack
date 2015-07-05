@@ -118,8 +118,11 @@ RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *DeclExpr)
 	std::string exprName = valDecl->getNameAsString();
 	llvm::outs() << BPINK << "DeclRefExpr" << RESET
 		     << BCYAN << " '" << exprName << "'" << RESET << "\n";
-	if (clang::FunctionDecl::classof(valDecl))
+	if (clang::FunctionDecl::classof(valDecl)) {
 		llvm::outs() << "Function\n";
+		if (exprName == "malloc")
+			llvm::outs() << "malloc function call detected\n";
+	}
 	return (true);
 }
 
