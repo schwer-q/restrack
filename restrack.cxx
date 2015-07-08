@@ -112,6 +112,13 @@ RessourceTrackerVisitor::VisitCXXRecordDecl(clang::CXXRecordDecl *Declaration)
 #endif	// 0
 
 bool
+RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
+{
+	Operator->dump();
+	return (true);
+}
+
+bool
 RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *DeclExpr)
 {
 	clang::ValueDecl *valDecl = DeclExpr->getDecl();
