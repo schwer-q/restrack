@@ -56,6 +56,7 @@ namespace {
 	public:
 		explicit RessourceTrackerVisitor(clang::ASTContext *);
 
+		bool VisitBinaryOperator(clang::BinaryOperator *);
 		bool VisitDeclRefExpr(clang::DeclRefExpr *);
 		bool VisitExpr(clang::Expr *);
 		bool VisitParmVarDecl(clang::ParmVarDecl *);
