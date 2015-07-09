@@ -119,17 +119,28 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 }
 
 bool
-RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *DeclExpr)
+RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *Reference)
 {
-	clang::ValueDecl *valDecl = DeclExpr->getDecl();
-	std::string exprName = valDecl->getNameAsString();
-	llvm::outs() << BPINK << "DeclRefExpr" << RESET
-		     << BCYAN << " '" << exprName << "'" << RESET << "\n";
-	if (clang::FunctionDecl::classof(valDecl)) {
-		llvm::outs() << "Function\n";
-		if (exprName == "malloc")
-			llvm::outs() << "malloc function call detected\n";
+	clang::ValueDecl *Declaration = Reference->getDecl();
+	std::string name = Declaration->getNameAsString();
+
+	llvm::outs() << BPINK << "DeclRefExpr" << RESET;
+
+	if (clang::FunctionDecl::classof(Declaration)) {
+		llvm::outs() << BGREEN << " Function" << RESET
+			     << BCYAN << " '" << name << "'" << RESET;
+
+		// llvm::outs() << "Function\n";
+		// if (exprName == "malloc")
+		// 	llvm::outs() << "malloc function call detected\n";
 	}
+
+	if (clang::VarDecl::classof(Declaration)) {
+		llvm::outs() << BGREEN << " Var" << RESET
+			     << BCYAN << " '" << name << "'" << RESET;
+	}
+
+	llvm::outs() << "\n";
 	return (true);
 }
 
