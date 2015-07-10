@@ -132,13 +132,13 @@ RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *Reference)
 
 		if (name == "calloc" || name == "malloc" ||
 		    name == "mmap" || name == "realloc")
-			llvm::outs() << " memory allocator";
+			llvm::outs() << RED << " memory allocator" << RESET;
 		else if (name == "fopen" || name == "open" || name == "socket")
-			llvm::outs() << " fd allocator";
+			llvm::outs() << RED << " fd allocator" << RESET;
 		else if (name == "free" || name == "munmap")
-			llvm::outs() << " memory deallocator";
+			llvm::outs() << RED << " memory deallocator" << RESET;
 		else if (name == "close" || name == "fclose")
-			llvm::outs() << " fd deallocator";
+			llvm::outs() << RED << " fd deallocator" << RESET;
 	}
 
 	if (clang::VarDecl::classof(Declaration)) {
