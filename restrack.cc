@@ -130,9 +130,15 @@ RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *Reference)
 		llvm::outs() << BGREEN << " Function" << RESET
 			     << BCYAN << " '" << name << "'" << RESET;
 
-		// llvm::outs() << "Function\n";
-		// if (exprName == "malloc")
-		// 	llvm::outs() << "malloc function call detected\n";
+		if (name == "calloc" || name == "malloc" ||
+		    name == "mmap" || name == "realloc")
+			llvm::outs() << " memory allocator";
+		else if (name == "fopen" || name == "open" || name == "socket")
+			llvm::outs() << " fd allocator";
+		else if (name == "free" || name == "munmap")
+			llvm::outs() << " memory deallocator";
+		else if (name == "close" || name == "fclose")
+			llvm::outs() << " fd deallocator";
 	}
 
 	if (clang::VarDecl::classof(Declaration)) {
@@ -141,8 +147,6 @@ RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *Reference)
 	}
 
 	llvm::outs() << "\n";
-
-	// clang::ParentMap parentMap()
 
 	return (true);
 }

@@ -26,6 +26,7 @@
 #
 
 CLANG_LEVEL := ../..
+
 LIBRARYNAME = restrack
 
 ifneq ($(REQUIRES_RTTI), 1)
