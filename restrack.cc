@@ -142,7 +142,7 @@ RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *Reference)
 
 	llvm::outs() << "\n";
 
-	clang::ParentMap parentMap()
+	// clang::ParentMap parentMap()
 
 	return (true);
 }
