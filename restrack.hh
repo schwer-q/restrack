@@ -55,6 +55,7 @@ namespace {
 
 	public:
 		explicit RessourceTrackerVisitor(clang::ASTContext *);
+		~RessourceTrackerVisitor(void);
 
 		bool VisitBinaryOperator(clang::BinaryOperator *);
 		bool VisitCompoundStmt(clang::CompoundStmt *);

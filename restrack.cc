@@ -33,6 +33,8 @@
 #include "clang/Frontend/FrontendPluginRegistry.h"
 #include "llvm/Support/raw_ostream.h"
 
+#include <cstdio>
+
 #include "restrack.hh"
 
 #if 0
@@ -89,6 +91,12 @@ namespace {
 RessourceTrackerVisitor::RessourceTrackerVisitor(clang::ASTContext *Context)
 {
 	this->Context = Context;
+	printf("ctor: this=%p\n", (void *)this);
+}
+
+RessourceTrackerVisitor::~RessourceTrackerVisitor(void)
+{
+	printf("dtor: this=%p\n", (void *)this);
 }
 
 #if 0
@@ -121,8 +129,8 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 bool
 RessourceTrackerVisitor::VisitCompoundStmt(clang::CompoundStmt *Expr)
 {
-	printf("this=%p\n", this);
-	printf("Expr=%p\n", Expr);
+	// printf("this=%p\n", this);
+	// printf("Expr=%p\n", Expr);
 	return (true);
 }
 
