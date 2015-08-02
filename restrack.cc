@@ -119,6 +119,14 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 }
 
 bool
+RessourceTrackerVisitor::VisitCompoundStmt(clang::CompoundStmt *Expr)
+{
+	printf("this=%p\n", this);
+	printf("Expr=%p\n", Expr);
+	return (true);
+}
+
+bool
 RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *Reference)
 {
 	clang::ValueDecl *Declaration = Reference->getDecl();
