@@ -123,6 +123,8 @@ bool
 RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 {
 	Operator->dump();
+	if (this->ParentMap->hasParent(Operator))
+		llvm::outs() << "has parent\n";
 	return (true);
 }
 
