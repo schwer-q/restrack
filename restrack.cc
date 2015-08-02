@@ -94,6 +94,11 @@ RessourceTrackerVisitor::RessourceTrackerVisitor(clang::ASTContext *Context)
 	this->Context = Context;
 }
 
+RessourceTrackerVisitor::~RessourceTrackerVisitor(void)
+{
+	delete this->ParentMap;
+}
+
 #if 0
 
 bool
@@ -124,8 +129,7 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 bool
 RessourceTrackerVisitor::VisitCompoundStmt(clang::CompoundStmt *Expr)
 {
-	clang::ParentMap PM =
-		clang::ParentMap(Expr);
+	this->ParentMap = new clang::ParentMap(Expr);
 	return (true);
 }
 

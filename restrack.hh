@@ -52,9 +52,11 @@ namespace {
 		public clang::RecursiveASTVisitor<RessourceTrackerVisitor> {
 	private:
 		clang::ASTContext *Context;
+		clang::ParentMap *ParentMap;
 
 	public:
 		explicit RessourceTrackerVisitor(clang::ASTContext *);
+		~RessourceTrackerVisitor(void);
 
 		bool VisitBinaryOperator(clang::BinaryOperator *);
 		bool VisitCompoundStmt(clang::CompoundStmt *);
