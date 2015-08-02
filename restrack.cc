@@ -134,7 +134,10 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 		llvm::outs() << "has child\n";
 
 	clang::StmtIterator it;
-	for (it = Children.first; it != Children.second; ++it);
+	int i = 0;
+	for (it = Children.first; it != Children.second; ++it)
+		++i;
+	llvm::outs << i << "\n";
 
 	return (true);
 }
