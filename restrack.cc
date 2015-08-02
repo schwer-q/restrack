@@ -32,6 +32,7 @@
 #include "clang/Frontend/FrontendAction.h"
 #include "clang/Frontend/FrontendPluginRegistry.h"
 #include "llvm/Support/raw_ostream.h"
+#include "clang/AST/ParentMap.h"
 
 #include <cstdio>
 
