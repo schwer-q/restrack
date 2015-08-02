@@ -125,7 +125,7 @@ bool
 RessourceTrackerVisitor::VisitCompoundStmt(clang::CompoundStmt *Expr)
 {
 	clang::ParentMap PM =
-		clang::ParentMap(this->Context->getTranslationUnitDecl());
+		clang::ParentMap(Expr);
 	return (true);
 }
 
