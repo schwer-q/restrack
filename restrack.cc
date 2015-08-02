@@ -126,7 +126,7 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 	Operator->dump();
 	if (this->ParentMap->hasParent(Operator))
 		llvm::outs() << "has parent\n";
-	auto Children = Operator->children();
+	clang::Stmt::child_range Children = Operator->children();
 	clang::Stmt::child_iterator it;
 	for (it = Children.begin(); it != Children.end(); ++it);
 	return (true);
