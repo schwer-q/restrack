@@ -131,6 +131,8 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 	// for (it = Children.begin(); it != Children.end(); ++it);
 	if (Children.empty())
 		llvm::outs() << "no child\n";
+	else
+		llvm::outs() << "has child\n";
 	return (true);
 }
 
