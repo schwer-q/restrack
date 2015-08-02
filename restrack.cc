@@ -129,7 +129,7 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 bool
 RessourceTrackerVisitor::VisitCompoundStmt(clang::CompoundStmt *Expr)
 {
-	this->ParentMap = new clang::ParentMap(Expr);
+	this->ParentMap = new ParentMap(Expr);
 	return (true);
 }
 
