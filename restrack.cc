@@ -127,8 +127,10 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 	if (this->ParentMap->hasParent(Operator))
 		llvm::outs() << "has parent\n";
 	clang::StmtRange Children = Operator->children();
-	clang::Stmt::child_iterator it;
-	for (it = Children.begin(); it != Children.end(); ++it);
+	// clang::Stmt::child_iterator it;
+	// for (it = Children.begin(); it != Children.end(); ++it);
+	if (Children.empty())
+		llvm::outs() << "no child\n";
 	return (true);
 }
 
