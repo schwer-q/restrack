@@ -123,7 +123,7 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 bool
 RessourceTrackerVisitor::VisitCompoundStmt(clang::CompoundStmt *Expr)
 {
-	llvm::outs() << this->Context->getParents(Expr);
+	clang::ParentMap PM = clang::ParentMap(this->Context->getTranslationUnitDecl());
 	return (true);
 }
 
