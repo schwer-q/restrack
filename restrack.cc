@@ -137,7 +137,7 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 	int i = 0;
 	for (it = Children.first; it != Children.second; ++it)
 		++i;
-	llvm::outs << i << "\n";
+	printf("%d\n", i);
 
 	return (true);
 }
