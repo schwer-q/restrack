@@ -138,6 +138,9 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 	for (it = Children.first; it != Children.second; ++it) {
 		if (clang::DeclRefExpr::classof(*it))
 			llvm::outs() << "DeclRefExpr\n";
+		if (clang::CallExpr::classof(*it))
+			llvm::outs() << "CallExpr\n";
+		++i;
 	}
 	printf("%d\n", i);
 
