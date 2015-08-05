@@ -136,8 +136,8 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 	clang::StmtIterator it;
 	int i = 0;
 	for (it = Children.first; it != Children.second; ++it) {
-		if (clang::ImplicitCastExpr::classof(*it))
-			llvm::outs() << "ImplicitCastExpr\n";
+		if (clang::DeclRefExpr::classof(*it))
+			llvm::outs() << "DeclRefExpr\n";
 	}
 	printf("%d\n", i);
 
