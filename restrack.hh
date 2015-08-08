@@ -54,6 +54,9 @@ namespace {
 		clang::ASTContext *Context;
 		clang::ParentMap *ParentMap;
 
+		int nbinop;
+		std::string lvalue;
+
 	public:
 		explicit RessourceTrackerVisitor(clang::ASTContext *);
 		~RessourceTrackerVisitor(void);

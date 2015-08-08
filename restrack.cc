@@ -134,15 +134,14 @@ RessourceTrackerVisitor::VisitBinaryOperator(clang::BinaryOperator *Operator)
 		llvm::outs() << "has child\n";
 
 	clang::StmtIterator it;
-	int i = 0;
+	this->nbinop = 0;
 	for (it = Children.first; it != Children.second; ++it) {
 		if (clang::DeclRefExpr::classof(*it))
 			llvm::outs() << "DeclRefExpr\n";
 		if (clang::CallExpr::classof(*it))
 			llvm::outs() << "CallExpr\n";
-		++i;
+		++(this->nbinop);
 	}
-	printf("%d\n", i);
 
 	return (true);
 }
@@ -175,11 +174,24 @@ RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *Reference)
 			llvm::outs() << RED << " memory deallocator" << RESET;
 		else if (name == "close" || name == "fclose")
 			llvm::outs() << RED << " fd deallocator" << RESET;
+
+		if (this->nbinop == 1) {
+			llvm::outs() << BWHITE << "assigning `" << BCYAN << name
+				     << RESET << BWHITE "' to variable `"
+				     << BCYAN << this->lvalue << RESET << BWHITE
+				     << "'\n";
+			--(this->nbinop);
+			this->lvalue.clear();
+		}
 	}
 
 	if (clang::VarDecl::classof(Declaration)) {
 		llvm::outs() << BGREEN << " Var" << RESET
 			     << BCYAN << " '" << name << "'" << RESET;
+		if (this->nbinop == 2) {
+			lvalue = name;
+			--(this->nbinop);
+		}
 	}
 
 	llvm::outs() << "\n";
