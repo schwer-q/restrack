@@ -176,7 +176,7 @@ RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *Reference)
 			llvm::outs() << RED << " fd deallocator" << RESET;
 
 		if (this->nbinop == 1) {
-			llvm::outs() << BWHITE << "assigning `" << BCYAN << name
+			llvm::outs() << BWHITE << "\nassigning `" << BCYAN << name
 				     << RESET << BWHITE "' to variable `"
 				     << BCYAN << this->lvalue << RESET << BWHITE
 				     << "'\n";
