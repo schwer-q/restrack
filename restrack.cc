@@ -90,6 +90,39 @@ namespace {
 }
 #endif	// 0
 
+RessourceTrackerFunction::RessourceTrackerFunction(clang::FunctionDecl *Function)
+{
+	this->m_Function = Function;
+}
+
+RessourceTrackerScope::RessourceTrackerScope(RessourceTrackerScope *Parent)
+{
+	this->m_Parent = Parent;
+}
+
+RessourceTrackerVariable::RessourceTrackerVariable(clang::VarDecl *Variable)
+{
+	this->m_Variable = Variable;
+}
+
+std::string
+RessourceTrackerVariable::getName(void) const
+{
+	return (this->m_Variable->getNameAsString());
+}
+
+bool
+RessourceTrackerVariable::isRessource(void) const
+{
+	return (this->m_Ressource);
+}
+
+bool
+RessourceTrackerVariable::isReturned(void) const
+{
+	return (this->m_Returned);
+}
+
 RessourceTrackerVisitor::RessourceTrackerVisitor(clang::ASTContext *Context)
 {
 	this->Context = Context;
@@ -207,6 +240,12 @@ RessourceTrackerVisitor::VisitExpr(clang::Expr *Expression)
 }
 
 bool
+RessourceTrackerVisitor::VisitFunctionDecl(clang::FunctionDecl *Function)
+{
+	this->m_Functions.emplace_back(Function);
+}
+
+bool
 RessourceTrackerVisitor::VisitParmVarDecl(clang::ParmVarDecl *Declaration)
 {
 	std::string varName = Declaration->getNameAsString();
@@ -240,6 +279,8 @@ RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 		}
 	}
 	llvm::outs() << "\n";
+
+
 	return (true);
 }
 
