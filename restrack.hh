@@ -63,7 +63,7 @@ namespace {
 		// a FunctionDecl create a new scope even if there is
 		// a CompoundStmt right after, so we keep ParmVarDecl
 		// as variables in the top level scope for the function
-		RessourceTrackerScope	m_Scope;
+		RessourceTrackerScope	*m_Scope;
 
 	public:
 		RessourceTrackerFunction(clang::FunctionDecl *);
@@ -76,9 +76,9 @@ namespace {
 	 */
 	class RessourceTrackerScope {
 	private:
-		std::list<RessourceTrackerVariable>	m_Variables;
+		std::list<RessourceTrackerVariable *>	m_Variables;
 		RessourceTrackerScope			*m_Parent;
-		std::list<RessourceTrackerScope>	m_Childs;
+		std::list<RessourceTrackerScope *>	m_Childs;
 
 	public:
 		RessourceTrackerScope(RessourceTrackerScope *);
@@ -110,7 +110,7 @@ namespace {
 		public clang::RecursiveASTVisitor<RessourceTrackerVisitor> {
 	private:
 		clang::ASTContext	*m_Context;
-		clang::ASTContext *Context __attribute((deprecated))__;
+		// clang::ASTContext *Context __attribute((deprecated))__;
 		clang::ASTContext *Context;
 		clang::ParentMap *ParentMap; // XXX: kill it
 
