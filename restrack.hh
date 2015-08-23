@@ -48,6 +48,10 @@
 #define	BWHITE	"\033[01;37m"
 
 namespace {
+	class RessourceTrackerFunction;
+	class RessourceTrackerScope;
+	class RessourceTrackerVariable;
+
 	/*
 	 * Represent a function within the AST
 	 * We hold the top level scope for the function.
