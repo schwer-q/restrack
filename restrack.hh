@@ -51,6 +51,9 @@ namespace {
 	class RessourceTrackerFunction;
 	class RessourceTrackerScope;
 	class RessourceTrackerVariable;
+	class RessourceTrackerVisitor;
+	class RessourceTrackerConsumer;
+	class RessourceTrackerAction;
 
 	/*
 	 * Represent a function within the AST
