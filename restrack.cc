@@ -243,6 +243,7 @@ bool
 RessourceTrackerVisitor::VisitFunctionDecl(clang::FunctionDecl *Function)
 {
 	this->m_Functions.emplace_back(Function);
+	return (true);
 }
 
 bool
