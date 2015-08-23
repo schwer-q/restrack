@@ -121,6 +121,7 @@ namespace {
 		bool VisitCompoundStmt(clang::CompoundStmt *);
 		bool VisitDeclRefExpr(clang::DeclRefExpr *);
 		bool VisitExpr(clang::Expr *);
+		bool VisitFunctionDecl(clang::FunctionDecl *);
 		bool VisitParmVarDecl(clang::ParmVarDecl *);
 		bool VisitVarDecl(clang::VarDecl *);
 	};
