@@ -109,7 +109,7 @@ namespace {
 	class RessourceTrackerVisitor :
 		public clang::RecursiveASTVisitor<RessourceTrackerVisitor> {
 	private:
-		clang::ASTContext	*m_Context;
+		// clang::ASTContext	*m_Context;
 		// clang::ASTContext *Context __attribute((deprecated))__;
 		clang::ASTContext *Context;
 		clang::ParentMap *ParentMap; // XXX: kill it
