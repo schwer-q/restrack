@@ -48,66 +48,66 @@
 #define	BWHITE	"\033[01;37m"
 
 namespace {
-	class RessourceTrackerFunction;
-	class RessourceTrackerScope;
-	class RessourceTrackerVariable;
+	// class RessourceTrackerFunction;
+	// class RessourceTrackerScope;
+	// class RessourceTrackerVariable;
 	class RessourceTrackerVisitor;
 	class RessourceTrackerConsumer;
 	class RessourceTrackerAction;
 
-	/*
-	 * Represent a function within the AST
-	 * We hold the top level scope for the function.
-	 */
-	class RessourceTrackerFunction {
-	private:
-		clang::FunctionDecl	*m_Function;
-		// std::list<RessourceTrackerVariable> m_parmvar;
-		// a FunctionDecl create a new scope even if there is
-		// a CompoundStmt right after, so we keep ParmVarDecl
-		// as variables in the top level scope for the function
-		RessourceTrackerScope	*m_Scope;
+	// /*
+	//  * Represent a function within the AST
+	//  * We hold the top level scope for the function.
+	//  */
+	// class RessourceTrackerFunction {
+	// private:
+	// 	clang::FunctionDecl	*m_Function;
+	// 	// std::list<RessourceTrackerVariable> m_parmvar;
+	// 	// a FunctionDecl create a new scope even if there is
+	// 	// a CompoundStmt right after, so we keep ParmVarDecl
+	// 	// as variables in the top level scope for the function
+	// 	RessourceTrackerScope	*m_Scope;
 
-	public:
-		RessourceTrackerFunction(clang::FunctionDecl *);
-	};
+	// public:
+	// 	RessourceTrackerFunction(clang::FunctionDecl *);
+	// };
 
-	/*
-	 * Represent a scope within the AST
-	 * A scope hold a pointer to his parent and store a list
-	 * of scopes that are at a level scope+1
-	 */
-	class RessourceTrackerScope {
-	private:
-		std::list<RessourceTrackerVariable *>	m_Variables;
-		RessourceTrackerScope			*m_Parent;
-		std::list<RessourceTrackerScope *>	m_Childs;
+	// /*
+	//  * Represent a scope within the AST
+	//  * A scope hold a pointer to his parent and store a list
+	//  * of scopes that are at a level scope+1
+	//  */
+	// class RessourceTrackerScope {
+	// private:
+	// 	std::list<RessourceTrackerVariable *>	m_Variables;
+	// 	RessourceTrackerScope			*m_Parent;
+	// 	std::list<RessourceTrackerScope *>	m_Childs;
 
-	public:
-		RessourceTrackerScope(RessourceTrackerScope *);
-	};
+	// public:
+	// 	RessourceTrackerScope(RessourceTrackerScope *);
+	// };
 
-	/*
-	 * Represent a variable whithin the AST
-	 */
-	class RessourceTrackerVariable {
-	private:
-		clang::VarDecl	*m_Variable;
-		bool		m_ParmVar; // XXX: Usefull?
+	// /*
+	//  * Represent a variable whithin the AST
+	//  */
+	// class RessourceTrackerVariable {
+	// private:
+	// 	clang::VarDecl	*m_Variable;
+	// 	bool		m_ParmVar; // XXX: Usefull?
 
-		bool		m_Ressource; // the variable is a ressource
-		bool		m_Returned;  // the variable is returned
+	// 	bool		m_Ressource; // the variable is a ressource
+	// 	bool		m_Returned;  // the variable is returned
 
-	public:
-		RessourceTrackerVariable(clang::VarDecl *);
+	// public:
+	// 	RessourceTrackerVariable(clang::VarDecl *);
 
-		std::string	getName(void) const;
-		bool		isRessource(void) const;
-		bool		isReturned(void) const;
+	// 	std::string	getName(void) const;
+	// 	bool		isRessource(void) const;
+	// 	bool		isReturned(void) const;
 
-		void		setRessource(bool);
-		void		setReturned(bool);
-	};
+	// 	void		setRessource(bool);
+	// 	void		setReturned(bool);
+	// };
 
 	class RessourceTrackerVisitor :
 		public clang::RecursiveASTVisitor<RessourceTrackerVisitor> {
