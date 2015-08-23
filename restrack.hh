@@ -48,29 +48,29 @@
 #define	BWHITE	"\033[01;37m"
 
 namespace {
-	// class RessourceTrackerFunction;
+	class RessourceTrackerFunction;
 	// class RessourceTrackerScope;
 	// class RessourceTrackerVariable;
 	class RessourceTrackerVisitor;
 	class RessourceTrackerConsumer;
 	class RessourceTrackerAction;
 
-	// /*
-	//  * Represent a function within the AST
-	//  * We hold the top level scope for the function.
-	//  */
-	// class RessourceTrackerFunction {
-	// private:
-	// 	clang::FunctionDecl	*m_Function;
-	// 	// std::list<RessourceTrackerVariable> m_parmvar;
-	// 	// a FunctionDecl create a new scope even if there is
-	// 	// a CompoundStmt right after, so we keep ParmVarDecl
-	// 	// as variables in the top level scope for the function
-	// 	RessourceTrackerScope	*m_Scope;
+	/*
+	 * Represent a function within the AST
+	 * We hold the top level scope for the function.
+	 */
+	class RessourceTrackerFunction {
+	private:
+		clang::FunctionDecl	*m_Function;
+		// std::list<RessourceTrackerVariable> m_parmvar;
+		// a FunctionDecl create a new scope even if there is
+		// a CompoundStmt right after, so we keep ParmVarDecl
+		// as variables in the top level scope for the function
+		RessourceTrackerScope	*m_Scope;
 
-	// public:
-	// 	RessourceTrackerFunction(clang::FunctionDecl *);
-	// };
+	public:
+		RessourceTrackerFunction(clang::FunctionDecl *);
+	};
 
 	// /*
 	//  * Represent a scope within the AST
@@ -118,7 +118,7 @@ namespace {
 		clang::ParentMap *ParentMap; // XXX: kill it
 
 		// RessourceTrackerScope	*m_GlobalScope;
-		std::list<RessourceTrackerFunction *> m_Functions;
+		std::list<RessourceTrackerFunction> m_Functions;
 
 	public:
 		explicit RessourceTrackerVisitor(clang::ASTContext *);
