@@ -221,10 +221,10 @@ RessourceTrackerVisitor::VisitDeclRefExpr(clang::DeclRefExpr *Reference)
 	if (clang::VarDecl::classof(Declaration)) {
 		llvm::outs() << BGREEN << " Var" << RESET
 			     << BCYAN << " '" << name << "'" << RESET;
-		if (this->nbinop == 2) {
-			lvalue = name;
-			--(this->nbinop);
-		}
+		// if (this->nbinop == 2) {
+		// 	lvalue = name;
+		// 	--(this->nbinop);
+		// }
 	}
 
 	llvm::outs() << "\n";
