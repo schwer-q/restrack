@@ -114,8 +114,8 @@ namespace {
 		clang::ASTContext *Context;
 		clang::ParentMap *ParentMap; // XXX: kill it
 
-		RessourceTrackerScope	m_GlobalScope;
-		std::list<RessourceTrackerFunction> m_Functions;
+		// RessourceTrackerScope	*m_GlobalScope;
+		// std::list<RessourceTrackerFunction> m_Functions;
 
 	public:
 		explicit RessourceTrackerVisitor(clang::ASTContext *);
