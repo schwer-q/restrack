@@ -124,7 +124,7 @@ namespace {
 		explicit RessourceTrackerVisitor(void);
 		~RessourceTrackerVisitor(void);
 
-		void setContext(clang::Context &);
+		void setContext(clang::ASTContext &);
 
 		bool VisitBinaryOperator(clang::BinaryOperator *);
 		bool VisitCompoundStmt(clang::CompoundStmt *);
