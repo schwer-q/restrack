@@ -73,9 +73,15 @@ RessourceTrackerScope::RessourceTrackerScope(RessourceTrackerScope *Parent)
 // 	return (this->m_Returned);
 // }
 
-RessourceTrackerVisitor::RessourceTrackerVisitor(clang::ASTContext *Context)
+RessourceTrackerVisitor::RessourceTrackerVisitor(void)
 {
-	this->Context = Context;
+
+}
+
+void
+RessourceTrackerVisitor::setContext(clang::ASTContext &Context)
+{
+	this->Context = &Context;
 }
 
 RessourceTrackerVisitor::~RessourceTrackerVisitor(void)
@@ -244,6 +250,7 @@ RessourceTrackerConsumer::RessourceTrackerConsumer(clang::ASTContext *Context) :
 void
 RessourceTrackerConsumer::HandleTranslationUnit(clang::ASTContext &Context)
 {
+	this->Visitor.setContext(Context);
 	this->Visitor.TraverseDecl(Context.getTranslationUnitDecl());
 }
 

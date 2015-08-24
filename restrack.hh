@@ -121,8 +121,10 @@ namespace {
 		std::list<RessourceTrackerFunction> m_Functions;
 
 	public:
-		explicit RessourceTrackerVisitor(clang::ASTContext *);
+		explicit RessourceTrackerVisitor(void);
 		~RessourceTrackerVisitor(void);
+
+		void setContext(clang::Context &);
 
 		bool VisitBinaryOperator(clang::BinaryOperator *);
 		bool VisitCompoundStmt(clang::CompoundStmt *);
