@@ -241,8 +241,8 @@ RessourceTrackerVisitor::VisitVarDecl(clang::VarDecl *Declaration)
 	return (true);
 }
 
-RessourceTrackerConsumer::RessourceTrackerConsumer(clang::ASTContext *Context) :
-	Visitor(Context)
+RessourceTrackerConsumer::RessourceTrackerConsumer(clang::ASTContext *Context)//  :
+// 	Visitor(Context)
 {
 
 }
