@@ -90,15 +90,16 @@ namespace {
 }
 #endif	// 0
 
-// RessourceTrackerFunction::RessourceTrackerFunction(clang::FunctionDecl *Function)
-// {
-// 	this->m_Function = Function;
-// }
+RessourceTrackerFunction::RessourceTrackerFunction(clang::FunctionDecl *Function)
+{
+	this->m_Function = Function;
+	this->m_Scope = new RessourceTrackerScope(nullptr);
+}
 
-// RessourceTrackerScope::RessourceTrackerScope(RessourceTrackerScope *Parent)
-// {
-// 	this->m_Parent = Parent;
-// }
+RessourceTrackerScope::RessourceTrackerScope(RessourceTrackerScope *Parent)
+{
+	this->m_Parent = Parent;
+}
 
 // RessourceTrackerVariable::RessourceTrackerVariable(clang::VarDecl *Variable)
 // {
