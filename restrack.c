@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright (c) 2015, Quentin Schwerkolt
  * All rights reserved.
  *
@@ -460,48 +460,6 @@ function_exit(restrack_t *restrack)
 	restrack->current_function = NULL;
 	clang_disposeString(name);
 }
-
-/* static int */
-/* function_isAllocator(restrack_t *restrack, CXCursor cursor) */
-/* { */
-/* 	const char *name; */
-/* 	function_t *func; */
-/* 	int idx; */
-
-/* 	STAILQ_FOREACH(func, &(restrack->functions), others) { */
-/* 		if (clang_equalCursors(func->cursor, cursor)) { */
-/* 			if (func->allocator == 1) */
-/* 				return (1); */
-/* 		} */
-/* 	} */
-/* 	name = clang_getCString(clang_getCursorSpelling(cursor)); */
-/* 	for (idx = 0; allocators[idx].name != NULL; ++idx) { */
-/* 		if (strcmp(allocators[idx].name, name) == 0) */
-/* 			return (1); */
-/* 	} */
-/* 	return (0); */
-/* } */
-
-/* static int */
-/* function_isDeallocator(restrack_t *restrack, CXCursor cursor) */
-/* { */
-/* 	const char *name; */
-/* 	function_t *func; */
-/* 	int idx; */
-
-/* 	STAILQ_FOREACH(func, &(restrack->functions), others) { */
-/* 		if (clang_equalCursors(func->cursor, cursor)) { */
-/* 			if (func->deallocator == 1) */
-/* 				return (1); */
-/* 		} */
-/* 	} */
-/* 	name = clang_getCString(clang_getCursorSpelling(cursor)); */
-/* 	for (idx = 0; deallocators[idx].name != NULL; ++idx) { */
-/* 		if (strcmp(deallocators[idx].name, name) == 0) */
-/* 			return (1); */
-/* 	} */
-/* 	return (0); */
-/* } */
 
 static scope_t *
 scope_create(scope_t *parent)
