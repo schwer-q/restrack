@@ -4,7 +4,6 @@
  *
  */
 
-#include <assert.h>
 #include <err.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,8 +26,6 @@ static function_t *function_create(CXCursor cursor);
 static void function_destroy(function_t *function);
 static void function_enter(restrack_t *restrack, CXCursor cursor);
 static void function_exit(restrack_t *restrack);
-static int function_isAllocator(restrack_t *restrack, CXCursor cursor);
-static int function_isDeallocator(restrack_t *restrack, CXCursor cursor);
 
 static scope_t *scope_create(scope_t *parent);
 static void scope_destroy(scope_t *scope);
@@ -161,7 +158,6 @@ visitor(CXCursor cursor, CXCursor parent __attribute__((unused)), CXClientData d
 	}
 
 	case CXCursor_DeclRefExpr: {
-		/* printf("=> DeclRefExpr (%u)\n", clang_getCursorKind(clang_getCursorReferenced(cursor))); */
 		origin = clang_getCursorReferenced(cursor);
 
 		if (restrack->current->returning == 1) {
@@ -183,11 +179,6 @@ visitor(CXCursor cursor, CXCursor parent __attribute__((unused)), CXClientData d
 		clang_visitChildren(cursor, visitor, (CXClientData)restrack);
 		function_exit(restrack);
 
-		/* if (function_isAllocator(restrack, cursor)) */
-		/* 	printf("==> Allocator\n"); */
-		/* else if (function_isDeallocator(restrack, cursor)) */
-		/* 	printf("==> Deallocator\n"); */
-
 		return (CXChildVisit_Continue);
 		break;
 	}
@@ -205,7 +196,6 @@ visitor(CXCursor cursor, CXCursor parent __attribute__((unused)), CXClientData d
 	case CXCursor_ReturnStmt: {
 		printf("=> ReturnStmt\n");
 		restrack->current->returning = 1;
-		/* clang_visitChildren(cursor, visitor, (CXClientData)restrack); */
 		clang_visitChildren(cursor, visitor_return, (CXClientData)restrack);
 		return (CXChildVisit_Continue);
 		break;
@@ -290,7 +280,6 @@ visitor_assign(CXCursor cursor, CXCursor parent __attribute__((unused)), CXClien
 	}
 
 	case CXCursor_IntegerLiteral: {
-		/* rvalue = origin; */
 		break;
 	}
 	default:
@@ -501,8 +490,6 @@ scope_enter(restrack_t *restrack)
 static void
 scope_exit(restrack_t *restrack)
 {
-	/* assert(restrack->current->parent != NULL); */
-
 	printf("exiting scope...\n");
 	restrack->current = restrack->current->parent;
 }

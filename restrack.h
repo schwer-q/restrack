@@ -51,16 +51,4 @@ struct _variable {
 	SLIST_ENTRY(_variable) others;
 };
 
-/* function_t	*function_new(CXCursor function); */
-/* void		function_delete(function_t *function); */
-/* void		function_set_scope(function_t *function, scope_t *scope); */
-
-/* scope_t	*scope_new(scope_t *parent); */
-/* void	scope_delete(scope_t *scope); */
-/* void	scope_add_child(scope_t *scope, scope_t *child); */
-/* void	scope_add_variable(scope_t *scope, variable_t *variable); */
-
-/* variable_t	*variable_new(CXCursor variable); */
-/* void		variable_delete(variable_t *variable); */
-
 #endif	/* __RESTRACK_H */
