@@ -13,6 +13,7 @@ typedef struct _function function_t;
 typedef struct _restrack restrack_t;
 typedef struct _scope scope_t;
 typedef struct _variable variable_t;
+typedef struct _useafterfree useafterfree_t;
 
 struct _restrack {
 	STAILQ_HEAD(functions, _function) functions;
@@ -48,7 +49,14 @@ struct _variable {
 	int		deallocated;
 	int		returned;
 
+	STAILQ_HEAD(useafterfree, _useafterfree) useafterfree;
 	SLIST_ENTRY(_variable) others;
+};
+
+struct _useafterfree {
+	CXCursor	cursor;
+
+	STAILQ_ENTRY(_useafterfree) next;
 };
 
 #endif	/* __RESTRACK_H */

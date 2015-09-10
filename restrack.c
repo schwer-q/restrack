@@ -5,6 +5,7 @@
  */
 
 #include <err.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -499,11 +500,22 @@ scope_getVariable(restrack_t *restrack, CXCursor cursor)
 {
 	scope_t *scope;
 	variable_t *variable;
+	CXFile file;
+	unsigned int column, line, offset;
 
 	for (scope = restrack->current; scope != NULL; /* void */) {
 		SLIST_FOREACH(variable, &(scope->variables), others) {
-			if (clang_equalCursors(variable->cursor, cursor))
+			if (clang_equalCursors(variable->cursor, cursor)) {
+				if (variable->allocated == 1 && variable->deallocated == 1) {
+					clang_getSpellingLocation(clang_getCursorLocation(cursor),
+								  &file, &line, &column, &offset);
+					printf("==> %s:%u:%u: \033[01;36m%s\033[00m: "
+					       "\033[01;31muse while it has been freed\033[00m\n",
+					       clang_getCString(clang_getFileName(file)), line, column,
+					       clang_getCString(clang_getCursorSpelling(variable->cursor)));
+				}
 				return (variable);
+			}
 		}
 		scope = scope->parent;
 	}
@@ -519,6 +531,7 @@ variable_create(CXCursor cursor)
 	if (variable == NULL)
 		errx(1, "fatal error: Not enough memory");
 	variable->cursor = cursor;
+	STAILQ_INIT(&(variable->useafterfree));
 	return (variable);
 }
 
