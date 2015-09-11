@@ -1,4 +1,10 @@
-.deps
-Makefile*
+*.cmake
+*.exe
 *.o
+.deps
+CMakeCache.txt
+CMakeFiles
+Makefile*
+a.out
+restrack
 restrack
