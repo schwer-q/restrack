@@ -120,7 +120,7 @@ analyse(restrack_t *restrack)
 				printf("==> %s:%u:%u: \033[01;36m%s\033[00m: "
 				       "\033[01;31mstill allocated when it was destroyed\033[00m\n",
 				       clang_getCString(clang_getFileName(file)), line, column,
-				       clang_getCString(clang_getCursorSpelling(var->cursor)));
+				       clang_getCString(clang_getCursorDisplayName(var->cursor)));
 			}
 		}
 	}
@@ -201,7 +201,8 @@ visitor(CXCursor cursor, CXCursor parent __attribute__((unused)), CXClientData d
 		break;
 	}
 
-	case CXCursor_VarDecl: {
+	case CXCursor_VarDecl:
+	case CXCursor_FieldDecl: {
 		variable_register(restrack, cursor);
 		break;
 	}
@@ -251,7 +252,7 @@ visitor_assign(CXCursor cursor, CXCursor parent __attribute__((unused)), CXClien
 					if (strcmp(allocators[idx], clang_getCString(name)) == 0 && var != NULL) {
 						printf("==> \033[01massigning %s to %s\033[00m\n",
 						       clang_getCString(name),
-						       clang_getCString(clang_getCursorSpelling(lvalue)));
+						       clang_getCString(clang_getCursorDisplayName(lvalue)));
 						var->allocated = 1;
 						break;
 					}
@@ -260,7 +261,7 @@ visitor_assign(CXCursor cursor, CXCursor parent __attribute__((unused)), CXClien
 					if (clang_equalCursors(function->cursor, origin) && function->allocator == 1) {
 						printf("==> \033[01massigning %s to %s\033[00m\n",
 						       clang_getCString(name),
-						       clang_getCString(clang_getCursorSpelling(lvalue)));
+						       clang_getCString(clang_getCursorDisplayName(lvalue)));
 						var->allocated = 1;
 						break;
 					}
@@ -316,7 +317,7 @@ visitor_call(CXCursor cursor, CXCursor parent __attribute__((unused)), CXClientD
 				if (strcmp(deallocators[idx], clang_getCString(name)) == 0 &&
 				    var != NULL /* && var->allocated == 1 */) {
 					printf("==> \033[01mdeassigning %s using %s\033[00m\n",
-					       clang_getCString(clang_getCursorSpelling(var->cursor)),
+					       clang_getCString(clang_getCursorDisplayName(var->cursor)),
 					       clang_getCString(clang_getCursorSpelling(func)));
 					var->deallocated = 1;
 					break;
@@ -326,7 +327,7 @@ visitor_call(CXCursor cursor, CXCursor parent __attribute__((unused)), CXClientD
 				if (clang_equalCursors(func, function->cursor) && function->deallocator == 1 &&
 					var != NULL /* && var->allocated == 1 */) {
 					printf("==> \033[01mdeassigning %s using %s\033[00m\n",
-					       clang_getCString(clang_getCursorSpelling(var->cursor)),
+					       clang_getCString(clang_getCursorDisplayName(var->cursor)),
 					       clang_getCString(clang_getCursorSpelling(func)));
 					var->deallocated = 1;
 					break;
@@ -534,7 +535,7 @@ variable_register(restrack_t *restrack, CXCursor cursor)
 	variable_t *variable;
 	CXString vname;
 
-	vname = clang_getCursorSpelling(cursor);
+	vname = clang_getCursorDisplayName(cursor);
 	printf("registering variable `%s'...\n", clang_getCString(vname));
 	clang_disposeString(vname);
 	variable = variable_create(cursor);
